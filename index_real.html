@@ -448,14 +448,9 @@
         }
 
         .faq-answer {
-            max-height: 0;
+            height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
-            background: #F9F8F6;
-        }
-
-        .faq-answer.open {
-            max-height: 500px;
+            transition: height 0.3s ease;
         }
 
         .faq-answer p {
@@ -573,9 +568,25 @@
                 padding: 1.5rem 1rem;
             }
 
-            .nav-links {
+            .keep {
+                    white-space: normal;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
                 gap: 1rem;
             }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+            }
+
+            /*.nav-links {
+                gap: 1rem;
+            }*/
 
             .nav-links button {
                 padding: 0.3rem 0.7rem;
@@ -776,12 +787,13 @@
     </section>
    </main>
    <footer>
-    <p>© 2024 Kulturuppropet. En röst för kultur i Sverige.</p>
+    <p>© 2026 Kulturuppropet.</p>
    </footer>
   </div>
   <script>
         const SHEET_URL =
           'https://docs.google.com/spreadsheets/d/e/2PACX-1vRDpuyRTgMtvdhU3COXqzseC3RhaAPtLPV5lle0xzfXFhxjuq-KNrwtABPuU-bU-W3OnlUdA6vC8jy8/pub?gid=0&single=true&output=csv';
+        const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzWMT5X1ItpeboZp9wGwsuEc0yDZSYuQ-2bMt41iWJpuZjTlzL8R3OqGOZ4GqAMd1o7zg/exec';
         
 
         // Navigation functionality
@@ -930,46 +942,96 @@
 
 
         // FAQ toggle
-        function toggleFaq(element) {
-            const answer = element.nextElementSibling;
-            const toggle = element.querySelector('.faq-toggle');
-            
-            answer.classList.toggle('open');
-            toggle.classList.toggle('open');
-        }
+       function toggleFaq(element) {
+           const answer = element.nextElementSibling;
+           const toggle = element.querySelector('.faq-toggle');
+
+           if (answer.style.height && answer.style.height !== '0px') {
+               // Close
+               answer.style.height = '0px';
+               toggle.classList.remove('open');
+           } else {
+               // Open
+               answer.style.height = answer.scrollHeight + 'px';
+               toggle.classList.add('open');
+           }
+       }
+
 
         // Form submissions
-        function handleNewsletterSubmit(e) {
+        async function handleNewsletterSubmit(e) {
             e.preventDefault();
+
             const input = e.target.querySelector('input[type="email"]');
             const email = input.value;
             
+
             // Simple feedback
             const btn = e.target.querySelector('button');
             const originalText = btn.textContent;
-            btn.textContent = 'Tack!';
-            btn.style.background = '#012E00';
+
+            btn.disabled = true;
+            btn.textContent = 'Skickar…';
+            const res = await fetch(ENDPOINT, {
+                method: 'POST',
+                body: JSON.stringify({
+                  type: 'newsletter',
+                  email
+                })
+            });
+
+            if (res.ok) {
+                btn.textContent = 'Tack!';
+                btn.style.background = '#012E00';
+                e.target.reset();
+            } else {
+                btn.textContent = 'Fel uppstod';
+            }
+
             
             input.value = '';
             setTimeout(() => {
                 btn.textContent = originalText;
                 btn.style.background = '';
+                btn.disabled = false;
             }, 2000);
         }
 
-        function handleContactSubmit(e) {
+        async function handleContactSubmit(e) {
             e.preventDefault();
             
-            // Simple feedback
+            const form = e.target;
             const btn = e.target.querySelector('button');
             const originalText = btn.textContent;
-            btn.textContent = 'Meddelande skickat!';
-            btn.style.background = '#012E00';
+
+            btn.disabled = true;
+            btn.textContent = 'Skickar…';
+            const payload = {
+                type: 'contact',
+                name: form.querySelector('#name').value,
+                email: form.querySelector('#email').value,
+                subject: form.querySelector('#subject').value,
+                message: form.querySelector('#message').value
+              };
+
+            const res = await fetch(ENDPOINT, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                btn.textContent = 'Meddelande skickat!';
+                btn.style.background = '#012E00';
+                e.target.reset();
+            } else {
+                btn.textContent = 'Fel uppstod';
+            }
             
             e.target.reset();
             setTimeout(() => {
                 btn.textContent = originalText;
                 btn.style.background = '';
+                btn.disabled = false;
             }, 2000);
         }
 
