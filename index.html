@@ -387,6 +387,54 @@
             box-shadow: 0 0 0 3px rgba(73, 0, 0, 0.1);
         }
 
+        /* Top statistics banner */
+        .stats-banner {
+            background: #FFFAFA;
+            border: 1px solid #ebded4;
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0 2rem;
+            box-shadow: 0 4px 24px rgba(73, 0, 0, 0.08);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0.4rem 0.2rem;
+        }
+
+        .stat-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            line-height: 1;
+            color: #490000;
+            letter-spacing: -0.5px;
+        }
+
+        .stat-label {
+            margin-top: 0.5rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #2E0000;
+            opacity: 0.8;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: clamp(46px, 7vw, 68px);
+            background: rgba(73, 0, 0, 0.18);
+            justify-self: center;
+        }
+
         .signatories-count {
             background-color: #ebded4;
             padding: 1rem;
@@ -826,6 +874,17 @@
             .newsletter-form {
                 flex-direction: column;
             }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 0.2rem;
+            }
+
+            .stat-divider {
+                width: 100%;
+                height: 1px;
+                margin: 0.35rem 0;
+            }
         }
 
     </style>
@@ -870,6 +929,26 @@
         <i>*Exempel på medverkan är att försköna eller rättfärdiga folkmord och apartheid och/eller samarbeta med den regering som begår dem. Svar på vanliga frågor om detta löfte finns <a href="https://orca-synthesizer-t7lz.squarespace.com/faqs"> här</a>.</i>
       </div><button class="cta-button" onclick="window.open('https://forms.gle/NsJ57kQVoC8i9LyT7', '_blank')">SKRIV UNDER HÄR!</button>
      </div>
+
+         <div class="stats-banner" aria-label="Statistik för uppropet">
+            <div class="stats-grid">
+             <div class="stat-item">
+                <div class="stat-value" id="totalStatsCount">0</div>
+                <div class="stat-label">Totalt undertecknare</div>
+             </div>
+             <div class="stat-divider" aria-hidden="true"></div>
+             <div class="stat-item">
+                <div class="stat-value" id="coStatsCount">0</div>
+                <div class="stat-label">Initiativtagare</div>
+             </div>
+             <div class="stat-divider" aria-hidden="true"></div>
+             <div class="stat-item">
+                <div class="stat-value" id="additionalStatsCount">0</div>
+                <div class="stat-label">Övriga undertecknare</div>
+             </div>
+            </div>
+         </div>
+
      <div class="search-container"><input type="text" id="searchInput" class="search-input" placeholder="Sök efter namn..."></div>
      <div class="signatories-tabs">
 
@@ -1130,6 +1209,16 @@
         let masterCo = [];
         let masterAll = [];
 
+        function updateStatsBanner(totalCount, coCount) {
+            const total = Number(totalCount) || 0;
+            const co = Number(coCount) || 0;
+            const additional = Math.max(0, total - co);
+
+            document.getElementById('totalStatsCount').textContent = total.toLocaleString('sv-SE');
+            document.getElementById('coStatsCount').textContent = co.toLocaleString('sv-SE');
+            document.getElementById('additionalStatsCount').textContent = additional.toLocaleString('sv-SE');
+        }
+
         async function loadSignatories() {
             try {
                 const response = await fetch(SHEET_URL);
@@ -1183,6 +1272,7 @@
                 renderCoSignatories(coSignatories);
                 renderSignatories(allSignatories);
                 updateSignatoryCount(seen.size);
+                updateStatsBanner(allSignatories.length, coSignatories.length);
 
                 masterCo = coSignatories;
                 masterAll = allSignatories;
@@ -1199,6 +1289,7 @@
                 renderCoSignatories(co);
                 renderSignatories(all);
                 updateSignatoryCount(co.length + all.length);
+                updateStatsBanner(all.length, co.length);
 
                 masterCo = co;
                 masterAll = all;
