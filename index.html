@@ -1119,6 +1119,7 @@
         const TEMP_CO_SIGNATORIES = [
           { name: "Anna Berg", title: "Regissör", stageName: "The Red Stage" },
           { name: "Jonas Nilsson", title: "Författare", stageName: "" },
+          { name: "Stage Artist", title: "Skådespelare", stageName: "Stage Artist" },
           { name: "Maria Ekström", title: "", stageName: "Ekström Projekt" },
           { name: "David Larsson", title: "Musiker", stageName: "" },
           { name: "Anna Berg", title: "Regissör", stageName: "The Red Stage" },
@@ -1140,6 +1141,7 @@
           { name: "Jonas Nilsson2", title: "Författare", stageName: "Nilsson & Co" },
           { name: "Maria Ekström2", title: "", stageName: "" },
           { name: "David Larsson2", title: "Musiker", stageName: "Larsson Beats" },
+          { name: "Stage Artist", title: "Skådespelare", stageName: "Stage Artist" },
           { name: "Anna Berg2", title: "Regissör", stageName: "" },
           { name: "Jonas Nilsson2", title: "Författare", stageName: "Nilsson & Co" },
           { name: "Maria Ekström2", title: "", stageName: "" },
@@ -1316,31 +1318,33 @@
             container.innerHTML = filtered.map(({ name, title, stageName }) => {
                 const initial = name.trim().charAt(0).toUpperCase();
                 const safeTitle = title?.trim() || "Kulturarbetare";
+                const normalizedName = name.trim();
+                const normalizedStage = stageName?.trim() || "";
+                const hasStageName = Boolean(normalizedStage);
+                const showName = hasStageName && normalizedStage.toLowerCase() !== normalizedName.toLowerCase();
                 
-                // If stage name exists: stage name (High), real name (Mid), title (Low)
-                // Otherwise: real name (High), title (Low)
-                if (stageName) {
+                if (hasStageName) {
                     return `
                         <div class="name-card">
                             <div class="name-initial">${initial}</div>
                             <div class="name-text">
-                                <div class="display-high">${stageName}</div>
-                                <div class="display-mid">${name}</div>
-                                <div class="display-low">${safeTitle}</div>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    return `
-                        <div class="name-card">
-                            <div class="name-initial">${initial}</div>
-                            <div class="name-text">
-                                <div class="display-high">${name}</div>
+                                <div class="display-high">${normalizedStage}</div>
+                                ${showName ? `<div class="display-mid">${normalizedName}</div>` : ''}
                                 <div class="display-low">${safeTitle}</div>
                             </div>
                         </div>
                     `;
                 }
+
+                return `
+                    <div class="name-card">
+                        <div class="name-initial">${initial}</div>
+                        <div class="name-text">
+                            <div class="display-high">${normalizedName}</div>
+                            <div class="display-low">${safeTitle}</div>
+                        </div>
+                    </div>
+                `;
             }).join('');
 
             document.getElementById('coCount').textContent =
@@ -1353,31 +1357,33 @@
 
             container.innerHTML = entries.map(({ name, title, stageName }) => {
                 const initial = name.trim().charAt(0).toUpperCase();
-                
-                // If stage name exists: stage name (High), real name (Mid), title (Low)
-                // Otherwise: real name (High), title (Low)
-                if (stageName) {
+                const normalizedName = name.trim();
+                const normalizedStage = stageName?.trim() || "";
+                const hasStageName = Boolean(normalizedStage);
+                const showName = hasStageName && normalizedStage.toLowerCase() !== normalizedName.toLowerCase();
+
+                if (hasStageName) {
                     return `
                         <div class="name-card">
                             <div class="name-initial">${initial}</div>
                             <div class="name-text">
-                                <div class="display-high">${stageName}</div>
-                                <div class="display-mid">${name}</div>
-                                <div class="display-low">${title || "Kulturarbetare"}</div>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    return `
-                        <div class="name-card">
-                            <div class="name-initial">${initial}</div>
-                            <div class="name-text">
-                                <div class="display-high">${name}</div>
+                                <div class="display-high">${normalizedStage}</div>
+                                ${showName ? `<div class="display-mid">${normalizedName}</div>` : ''}
                                 <div class="display-low">${title || "Kulturarbetare"}</div>
                             </div>
                         </div>
                     `;
                 }
+
+                return `
+                    <div class="name-card">
+                        <div class="name-initial">${initial}</div>
+                        <div class="name-text">
+                            <div class="display-high">${normalizedName}</div>
+                            <div class="display-low">${title || "Kulturarbetare"}</div>
+                        </div>
+                    </div>
+                `;
             }).join('');
 
             document.getElementById('allCount').textContent =
