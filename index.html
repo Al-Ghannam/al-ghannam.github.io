@@ -335,23 +335,22 @@
             flex-direction: column;
         }
 
-        .name-text .name {
-            font-weight: 700;
-            color: #490000;
+        /* Prominence levels for display fields */
+        .name-text .display-high {
             font-size: 0.95rem;
+            color: #490000;
+            font-weight: 700;
         }
 
-        .name-text .title {
+        .name-text .display-mid {
             font-size: 0.8rem;
             color: #6b3a3a;
+            font-weight: 600;
         }
 
-        .name-text .stage-name {
+        .name-text .display-low {
             font-size: 0.75rem;
             color: #8B5A5A;
-            font-weight: 600;
-            margin-top: 0.2rem;
-            font-style: italic;
         }
 
         /* Shared name list style (non-interactive) */
@@ -1317,18 +1316,31 @@
             container.innerHTML = filtered.map(({ name, title, stageName }) => {
                 const initial = name.trim().charAt(0).toUpperCase();
                 const safeTitle = title?.trim() || "Kulturarbetare";
-                const stageLine = stageName ? `<div class="stage-name">${stageName}</div>` : '';
-
-                return `
-                    <div class="name-card">
-                        <div class="name-initial">${initial}</div>
-                        <div class="name-text">
-                            <div class="name">${name}</div>
-                            <div class="title">${safeTitle}</div>
-                            ${stageLine}
+                
+                // If stage name exists: stage name (High), real name (Mid), title (Low)
+                // Otherwise: real name (High), title (Low)
+                if (stageName) {
+                    return `
+                        <div class="name-card">
+                            <div class="name-initial">${initial}</div>
+                            <div class="name-text">
+                                <div class="display-high">${stageName}</div>
+                                <div class="display-mid">${name}</div>
+                                <div class="display-low">${safeTitle}</div>
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                } else {
+                    return `
+                        <div class="name-card">
+                            <div class="name-initial">${initial}</div>
+                            <div class="name-text">
+                                <div class="display-high">${name}</div>
+                                <div class="display-low">${safeTitle}</div>
+                            </div>
+                        </div>
+                    `;
+                }
             }).join('');
 
             document.getElementById('coCount').textContent =
@@ -1341,18 +1353,31 @@
 
             container.innerHTML = entries.map(({ name, title, stageName }) => {
                 const initial = name.trim().charAt(0).toUpperCase();
-                const stageLine = stageName ? `<div class="stage-name">${stageName}</div>` : '';
-
-                return `
-                    <div class="name-card">
-                        <div class="name-initial">${initial}</div>
-                        <div class="name-text">
-                            <div class="name">${name}</div>
-                            <div class="title">${title || "Kulturarbetare"}</div>
-                            ${stageLine}
+                
+                // If stage name exists: stage name (High), real name (Mid), title (Low)
+                // Otherwise: real name (High), title (Low)
+                if (stageName) {
+                    return `
+                        <div class="name-card">
+                            <div class="name-initial">${initial}</div>
+                            <div class="name-text">
+                                <div class="display-high">${stageName}</div>
+                                <div class="display-mid">${name}</div>
+                                <div class="display-low">${title || "Kulturarbetare"}</div>
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                } else {
+                    return `
+                        <div class="name-card">
+                            <div class="name-initial">${initial}</div>
+                            <div class="name-text">
+                                <div class="display-high">${name}</div>
+                                <div class="display-low">${title || "Kulturarbetare"}</div>
+                            </div>
+                        </div>
+                    `;
+                }
             }).join('');
 
             document.getElementById('allCount').textContent =
