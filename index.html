@@ -346,6 +346,13 @@
             color: #6b3a3a;
         }
 
+        .name-text .stage-name {
+            font-size: 0.75rem;
+            color: #8B5A5A;
+            font-weight: 600;
+            margin-top: 0.2rem;
+            font-style: italic;
+        }
 
         /* Shared name list style (non-interactive) */
         .name-item {
@@ -1111,57 +1118,57 @@
         const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzWMT5X1ItpeboZp9wGwsuEc0yDZSYuQ-2bMt41iWJpuZjTlzL8R3OqGOZ4GqAMd1o7zg/exec';
         
         const TEMP_CO_SIGNATORIES = [
-          { name: "Anna Berg", title: "Regissör" },
-          { name: "Jonas Nilsson", title: "Författare" },
-          { name: "Maria Ekström", title: "" },
-          { name: "David Larsson", title: "Musiker" },
-          { name: "Anna Berg", title: "Regissör" },
-          { name: "Jonas Nilsson", title: "Författare" },
-          { name: "Maria Ekström", title: "" },
-          { name: "David Larsson", title: "Musiker" },
-          { name: "Anna Berg", title: "Regissör" },
-          { name: "Jonas Nilsson", title: "Författare" },
-          { name: "Maria Ekström", title: "" },
-          { name: "David Larsson", title: "Musiker" },
-          { name: "Anna Berg", title: "Regissör" },
-          { name: "Jonas Nilsson", title: "Författare" },
-          { name: "Maria Ekström", title: "" },
-          { name: "David Larsson", title: "Musiker" }
+          { name: "Anna Berg", title: "Regissör", stageName: "The Red Stage" },
+          { name: "Jonas Nilsson", title: "Författare", stageName: "" },
+          { name: "Maria Ekström", title: "", stageName: "Ekström Projekt" },
+          { name: "David Larsson", title: "Musiker", stageName: "" },
+          { name: "Anna Berg", title: "Regissör", stageName: "The Red Stage" },
+          { name: "Jonas Nilsson", title: "Författare", stageName: "" },
+          { name: "Maria Ekström", title: "", stageName: "Ekström Projekt" },
+          { name: "David Larsson", title: "Musiker", stageName: "" },
+          { name: "Anna Berg", title: "Regissör", stageName: "The Red Stage" },
+          { name: "Jonas Nilsson", title: "Författare", stageName: "" },
+          { name: "Maria Ekström", title: "", stageName: "Ekström Projekt" },
+          { name: "David Larsson", title: "Musiker", stageName: "" },
+          { name: "Anna Berg", title: "Regissör", stageName: "The Red Stage" },
+          { name: "Jonas Nilsson", title: "Författare", stageName: "" },
+          { name: "Maria Ekström", title: "", stageName: "Ekström Projekt" },
+          { name: "David Larsson", title: "Musiker", stageName: "" }
         ];
 
         const TEMP_SIGNATORIES = [
-          { name: "Anna Berg2", title: "Regissör" },
-          { name: "Jonas Nilsson2", title: "Författare" },
-          { name: "Maria Ekström2", title: "" },
-          { name: "David Larsson2", title: "Musiker" },
-          { name: "Anna Berg2", title: "Regissör" },
-          { name: "Jonas Nilsson2", title: "Författare" },
-          { name: "Maria Ekström2", title: "" },
-          { name: "David Larsson2", title: "Musiker" },
-          { name: "Anna Berg2", title: "Regissör" },
-          { name: "Jonas Nilsson2", title: "Författare" },
-          { name: "Maria Ekström2", title: "" },
-          { name: "David Larsson2", title: "Musiker" },
-          { name: "Anna Berg2", title: "Regissör" },
-          { name: "Jonas Nilsson2", title: "Författare" },
-          { name: "Maria Ekström2", title: "" },
-          { name: "David Larsson2", title: "Musiker" },
-          { name: "Anna Berg2", title: "Regissör" },
-          { name: "Jonas Nilsson2", title: "Författare" },
-          { name: "Maria Ekström2", title: "" },
-          { name: "David Larsson2", title: "Musiker" },
-          { name: "Anna Berg2", title: "Regissör" },
-          { name: "Jonas Nilsson2", title: "Författare" },
-          { name: "Maria Ekström2", title: "" },
-          { name: "David Larsson2", title: "Musiker" },
-          { name: "Anna Berg2", title: "Regissör" },
-          { name: "Jonas Nilsson2", title: "Författare" },
-          { name: "Maria Ekström2", title: "" },
-          { name: "David Larsson2", title: "Musiker" },
-          { name: "Anna Berg2", title: "Regissör" },
-          { name: "Jonas Nilsson2", title: "Författare" },
-          { name: "Maria Ekström2", title: "" },
-          { name: "David Larsson2", title: "Musiker" }
+          { name: "Anna Berg2", title: "Regissör", stageName: "" },
+          { name: "Jonas Nilsson2", title: "Författare", stageName: "Nilsson & Co" },
+          { name: "Maria Ekström2", title: "", stageName: "" },
+          { name: "David Larsson2", title: "Musiker", stageName: "Larsson Beats" },
+          { name: "Anna Berg2", title: "Regissör", stageName: "" },
+          { name: "Jonas Nilsson2", title: "Författare", stageName: "Nilsson & Co" },
+          { name: "Maria Ekström2", title: "", stageName: "" },
+          { name: "David Larsson2", title: "Musiker", stageName: "Larsson Beats" },
+          { name: "Anna Berg2", title: "Regissör", stageName: "" },
+          { name: "Jonas Nilsson2", title: "Författare", stageName: "Nilsson & Co" },
+          { name: "Maria Ekström2", title: "", stageName: "" },
+          { name: "David Larsson2", title: "Musiker", stageName: "Larsson Beats" },
+          { name: "Anna Berg2", title: "Regissör", stageName: "" },
+          { name: "Jonas Nilsson2", title: "Författare", stageName: "Nilsson & Co" },
+          { name: "Maria Ekström2", title: "", stageName: "" },
+          { name: "David Larsson2", title: "Musiker", stageName: "Larsson Beats" },
+          { name: "Anna Berg2", title: "Regissör", stageName: "" },
+          { name: "Jonas Nilsson2", title: "Författare", stageName: "Nilsson & Co" },
+          { name: "Maria Ekström2", title: "", stageName: "" },
+          { name: "David Larsson2", title: "Musiker", stageName: "Larsson Beats" },
+          { name: "Anna Berg2", title: "Regissör", stageName: "" },
+          { name: "Jonas Nilsson2", title: "Författare", stageName: "Nilsson & Co" },
+          { name: "Maria Ekström2", title: "", stageName: "" },
+          { name: "David Larsson2", title: "Musiker", stageName: "Larsson Beats" },
+          { name: "Anna Berg2", title: "Regissör", stageName: "" },
+          { name: "Jonas Nilsson2", title: "Författare", stageName: "Nilsson & Co" },
+          { name: "Maria Ekström2", title: "", stageName: "" },
+          { name: "David Larsson2", title: "Musiker", stageName: "Larsson Beats" },
+          { name: "Anna Berg2", title: "Regissör", stageName: "" },
+          { name: "Jonas Nilsson2", title: "Författare", stageName: "Nilsson & Co" },
+          { name: "Maria Ekström2", title: "", stageName: "" },
+          { name: "David Larsson2", title: "Musiker", stageName: "Larsson Beats" }
         ];
 
 
@@ -1240,6 +1247,7 @@
                     const rawName = row['Name']?.trim();
                     const rawIsCo = row['IsCo']?.trim().toLowerCase();
                     const rawTitle = row['Title']?.trim() || '';
+                    const rawStageName = row['Stage Name']?.trim() || '';
 
                     if (!rawName) return;
 
@@ -1249,7 +1257,8 @@
 
                     const entry = {
                         name: rawName,
-                        title: rawTitle || "Kulturarbetare"
+                        title: rawTitle || "Kulturarbetare",
+                        stageName: rawStageName
                     };
 
                     if (rawIsCo.toLowerCase() === 'ja') {
@@ -1305,9 +1314,10 @@
                 entry.name.toLowerCase().includes(filter.toLowerCase())
             );
 
-            container.innerHTML = filtered.map(({ name, title }) => {
+            container.innerHTML = filtered.map(({ name, title, stageName }) => {
                 const initial = name.trim().charAt(0).toUpperCase();
                 const safeTitle = title?.trim() || "Kulturarbetare";
+                const stageLine = stageName ? `<div class="stage-name">${stageName}</div>` : '';
 
                 return `
                     <div class="name-card">
@@ -1315,6 +1325,7 @@
                         <div class="name-text">
                             <div class="name">${name}</div>
                             <div class="title">${safeTitle}</div>
+                            ${stageLine}
                         </div>
                     </div>
                 `;
@@ -1328,8 +1339,9 @@
         function renderSignatories(entries) {
             const container = document.getElementById('signatoriesList');
 
-            container.innerHTML = entries.map(({ name, title }) => {
+            container.innerHTML = entries.map(({ name, title, stageName }) => {
                 const initial = name.trim().charAt(0).toUpperCase();
+                const stageLine = stageName ? `<div class="stage-name">${stageName}</div>` : '';
 
                 return `
                     <div class="name-card">
@@ -1337,6 +1349,7 @@
                         <div class="name-text">
                             <div class="name">${name}</div>
                             <div class="title">${title || "Kulturarbetare"}</div>
+                            ${stageLine}
                         </div>
                     </div>
                 `;
@@ -1357,12 +1370,14 @@
 
             const filteredCo = masterCo.filter(entry =>
                 entry.name.toLowerCase().includes(q) ||
-                entry.title.toLowerCase().includes(q)
+                entry.title.toLowerCase().includes(q) ||
+                (entry.stageName && entry.stageName.toLowerCase().includes(q))
             );
 
             const filteredAll = masterAll.filter(entry =>
                 entry.name.toLowerCase().includes(q) ||
-                entry.title.toLowerCase().includes(q)
+                entry.title.toLowerCase().includes(q) ||
+                (entry.stageName && entry.stageName.toLowerCase().includes(q))
             );
 
             renderCoSignatories(filteredCo);
